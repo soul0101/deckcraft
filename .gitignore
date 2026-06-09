@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor / OS
+*.swp
+Thumbs.db
+
+# Verification / tooling artifacts
+.playwright-mcp/
+deck-title.png

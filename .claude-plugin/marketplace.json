@@ -1,0 +1,14 @@
+{
+  "name": "deckcraft",
+  "owner": {
+    "name": "Chirag Hegde",
+    "email": "chirag.hegde01@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "deckcraft",
+      "source": ".",
+      "description": "Interactive Reveal.js deck framework. One HTML file per slide, manifest-driven order, design-token CSS, no build step."
+    }
+  ]
+}

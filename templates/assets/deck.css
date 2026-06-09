@@ -1,0 +1,339 @@
+/*
+ * deck.css — design system for the modular Reveal.js deck.
+ *
+ * The values below are a *starting seed*, not a house style. The
+ * /deck-new flow asks the user for palette + type and overwrites this
+ * :root block to match. Slide bodies should reference var(--token)
+ * only — never hex, never a literal font-family — so a re-theme is a
+ * small edit of this :root block alone.
+ *
+ * Tokens are semantic (--accent, --good, --warn, --font-body) so a
+ * fork can pick any aesthetic without renaming references across slides.
+ *
+ * Default mood: LIGHT cream. The page surround (--page) and almost every
+ * slide are light. The dark variant is an opt-in for a single dramatic
+ * moment, not the house default.
+ */
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TOKENS — semantic names, neutral defaults.
+   Replace the values below to re-theme the deck. Don't rename the
+   tokens themselves unless you also sweep the template stubs and
+   widgets.js, which reference these names.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  /* Surfaces — page + panel backgrounds. Tilt warm or cool to taste. */
+  --page:         #f0e9dc;   /* the surround behind the slide sheets (light) */
+  --paper:        #faf6ee;   /* default sheet background */
+  --paper-2:      #f0e9dc;   /* recessed cards, code chips, inset wells */
+  --paper-3:      #fffdf8;   /* lifted panels — slightly brighter than paper */
+
+  /* Ink — text hierarchy. --ink is the loudest, --muted the quietest. */
+  --ink:          #1a1612;   /* body text + headings */
+  --ink-2:        #2a241e;   /* secondary text, body copy */
+  --ink-3:        #4a4138;   /* tertiary text, captions */
+  --muted:        #807466;   /* labels, eyebrows, attributions */
+
+  /* Hairlines — dividers and card borders. */
+  --rule:         #d8cfc0;
+  --rule-soft:    #ebe3d4;
+
+  /* Accent — the *one* expressive colour. Used sparingly per slide. */
+  --accent:       #cc785c;   /* primary accent */
+  --accent-deep:  #a85a3f;   /* hover / pressed */
+  --accent-soft:  #e89a7f;   /* tints, highlights, faint fills */
+
+  /* Semantic states — keep distinct from --accent. */
+  --good:         #6f8b6e;   /* success / positive */
+  --warn:         #c89a3c;   /* warm CTA / warning */
+  --warn-deep:    #9a6e1e;
+
+  /* Stage — dark VARIANT background + on-dark text (opt-in, not the page). */
+  --stage:        #181210;
+  --stage-2:      #100b08;
+  --ink-on-dark:  #f0e9dc;
+  --muted-on-dark:#b3a896;
+
+  /* Type — three roles, three families. Re-theme by editing these three. */
+  --font-body:    "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "Geist Mono", ui-monospace, monospace;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   STAGE — fixed 1280×720 sheet on a light surround, editorial feel.
+   ═══════════════════════════════════════════════════════════════════════ */
+html, body, .reveal {
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "cv01", "cv02";
+}
+
+/* Reveal 5 paints the surround on .reveal-viewport (defaults to white).
+   Point it at --page so the margin around the sheets is the deck's cream,
+   not a hard white. This is the element the audience sees behind slides. */
+.reveal-viewport { background: var(--page); }
+
+.reveal .slides { text-align: initial; }
+
+.reveal .slides > section,
+.reveal .slides > section > section {
+  width: 1280px; height: 720px;
+  padding: 0 !important;
+  top: 0 !important; left: 0 !important;
+  margin: 0 !important;
+  background: var(--paper);
+  color: var(--ink);
+  overflow: hidden;
+  display: block;
+  /* Soft, theme-aware lift so sheets settle calmly on the light surround. */
+  box-shadow:
+    0 18px 44px -26px color-mix(in srgb, var(--ink) 36%, transparent),
+    0 3px 10px -6px color-mix(in srgb, var(--ink) 16%, transparent);
+}
+
+/* sheet — primary cream variant. Very subtle warmth, no decorative gradients. */
+.reveal .slides section.sheet { background: var(--paper); }
+.reveal .slides section.sheet::before {
+  content: ""; position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(1200px 600px at 92% -10%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 60%),
+    radial-gradient(800px 400px at -10% 110%, color-mix(in srgb, var(--ink) 4%, transparent), transparent 60%);
+}
+.reveal .slides section.sheet::after {
+  content: ""; position: absolute; inset: 0;
+  pointer-events: none; z-index: 2;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent),
+    inset 0 0 80px color-mix(in srgb, var(--ink) 4%, transparent);
+}
+.reveal .slides section.sheet > * { z-index: 1; }
+.reveal .slides section.sheet > .bg-layer { position: absolute; inset: 0; z-index: 0; }
+
+/* dark — OPT-IN drama: one hero / quote moment. Warm near-black, never blue.
+   Not the default for chapter openers — reach for it deliberately. */
+.reveal .slides section.dark {
+  background: var(--stage);
+  color: var(--ink-on-dark);
+}
+.reveal .slides section.dark::before {
+  content: ""; position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+  background:
+    radial-gradient(900px 600px at 20% 20%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 65%),
+    radial-gradient(700px 500px at 80% 80%, color-mix(in srgb, var(--accent-soft) 8%, transparent), transparent 60%);
+}
+.reveal .slides section.dark::after {
+  content: ""; position: absolute; inset: 0;
+  pointer-events: none; z-index: 2;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ink-on-dark) 6%, transparent),
+    inset 0 0 140px rgba(0, 0, 0, .55);
+}
+.reveal .slides section.dark > * { z-index: 1; }
+
+/* plate — full-bleed image moments. Brighter cream so photos sit cleanly. */
+.reveal .slides section.plate { background: var(--paper-3); }
+.reveal .slides section.plate::after {
+  content: ""; position: absolute; inset: 0;
+  pointer-events: none; z-index: 2;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent),
+    inset 0 0 80px color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   CHROME — editorial header strip: orientation only, kept deliberately quiet.
+   Left = talk · chapter, right = folio chip (the validator checks the chip).
+   This strip IS the slide's small-text budget — don't echo it as on-slide
+   eyebrows or captions.
+   ═══════════════════════════════════════════════════════════════════════ */
+.chrome {
+  position: absolute; top: 28px; left: 56px; right: 56px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--font-mono);
+  font-size: 10.5px; letter-spacing: .24em;
+  font-weight: 500; color: var(--ink-2);
+  text-transform: uppercase; z-index: 3;
+}
+.sheet  .chrome { color: var(--ink-2); }
+.plate  .chrome { color: var(--ink-2); }
+.dark   .chrome { color: var(--muted-on-dark); }
+.chrome .dot {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--accent);
+  margin-right: 10px; vertical-align: middle;
+}
+.chrome .folio { font-variant-numeric: tabular-nums; }
+.chrome .right { display: flex; gap: 18px; align-items: center; }
+
+/* sig — optional bottom-left signature (date, venue, author handle). */
+.sig {
+  position: absolute; left: 56px; bottom: 28px;
+  font-family: var(--font-mono);
+  font-size: 10px; letter-spacing: .24em;
+  text-transform: uppercase; color: var(--muted); z-index: 3;
+}
+.sig.r { left: auto; right: 56px; text-align: right; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY — minimal hierarchy. Use these as a baseline; slides may
+   override via inline style="" for editorial moments.
+   ═══════════════════════════════════════════════════════════════════════ */
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal p,
+.reveal ol,
+.reveal ul { margin: 0; }
+
+.reveal h1 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 96px; line-height: 1.0;
+  letter-spacing: -0.028em;
+  color: var(--ink);
+  max-width: 1080px;
+}
+.reveal h2 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 60px; line-height: 1.08;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+}
+.reveal h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 36px; line-height: 1.18;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+}
+.reveal h4 {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 22px; line-height: 1.3;
+  letter-spacing: -0.012em;
+  color: var(--ink-2);
+}
+
+.reveal .dark h1,
+.reveal .dark h2,
+.reveal .dark h3,
+.reveal .dark h4 { color: var(--ink-on-dark); }
+
+.reveal p {
+  font-family: var(--font-body);
+  font-size: 24px; line-height: 1.45;
+  color: var(--ink-2);
+  max-width: 920px;
+}
+.reveal .dark p { color: var(--muted-on-dark); }
+
+/* Italic-display voice — the ONE expressive line per slide (subtitle,
+   pull-quote, a single emphasised word). Apply via class="kicker" or
+   <em class="kicker">…</em>. Not for body paragraphs. */
+.reveal .kicker,
+.reveal em.kicker {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink);
+}
+.reveal .dark .kicker,
+.reveal .dark em.kicker { color: var(--ink-on-dark); }
+
+/* Eyebrow — a small mono label above a title. DEFAULT OFF. Most slides
+   need none: the chrome strip already orients the audience. Use one only
+   when a slide needs a category label its headline genuinely can't carry,
+   and never more than one tiny label per slide. */
+.reveal .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: .28em;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.reveal .dark .eyebrow { color: var(--muted-on-dark); }
+.reveal .eyebrow.accent { color: var(--accent); }
+
+/* Editorial pull-quote — italic display at scale. */
+.reveal blockquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 44px; line-height: 1.22;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  max-width: 980px;
+}
+.reveal .dark blockquote { color: var(--ink-on-dark); }
+.reveal blockquote em {
+  font-style: normal;
+  color: var(--accent);
+  font-weight: 600;
+}
+.reveal blockquote cite {
+  display: block;
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 11px; letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Hairlines — the workhorse divider. Short variant is the accent rule. */
+.reveal hr.rule {
+  border: 0; height: 1px;
+  background: var(--rule);
+  margin: 0;
+}
+.reveal hr.rule.soft { background: var(--rule-soft); }
+.reveal hr.rule.short {
+  width: 72px; height: 2px;
+  background: var(--accent);
+}
+
+/* Inline links — accent colour, hairline underline, nothing showy. */
+.reveal a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: color .15s ease, border-color .15s ease;
+}
+.reveal a:hover {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent);
+}
+
+/* Inline code chip — recessed, mono, low-contrast on cream. */
+.reveal code,
+.reveal kbd {
+  font-family: var(--font-mono);
+  font-size: .92em;
+  background: var(--paper-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--ink);
+}
+.reveal .dark code,
+.reveal .dark kbd {
+  background: rgba(240, 233, 220, .08);
+  color: var(--ink-on-dark);
+}
+
+/* Focus ring — visible keyboard focus for interactive widgets. */
+.reveal :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Speaker notes — hidden on stage, surfaced in speaker view by Reveal. */
+aside.notes { display: none; }

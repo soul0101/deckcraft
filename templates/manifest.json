@@ -1,0 +1,17 @@
+{
+  "description": "Ordered list of slides. Reorder, remove, or insert entries here to change the deck running order. Each path points to a single-section HTML file under content/.",
+  "slides": [
+    {
+      "folio": "01",
+      "chapter": "Intro",
+      "title": "Title card",
+      "path": "content/00-intro/01-title-card.html"
+    },
+    {
+      "folio": "02",
+      "chapter": "Intro",
+      "title": "Agenda",
+      "path": "content/00-intro/02-agenda.html"
+    }
+  ]
+}

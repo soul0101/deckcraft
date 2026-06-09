@@ -1,0 +1,12 @@
+{
+  "name": "deckcraft",
+  "version": "0.1.1",
+  "description": "Interactive Reveal.js deck framework. One HTML file per slide, manifest-driven order, design-token CSS, no build step.",
+  "keywords": ["reveal.js", "slides", "deck", "presentation", "talk", "conference", "html"],
+  "author": {
+    "name": "Chirag Hegde",
+    "email": "chirag.hegde01@gmail.com"
+  },
+  "homepage": "https://github.com/soul0101/deckcraft",
+  "repository": "https://github.com/soul0101/deckcraft"
+}
