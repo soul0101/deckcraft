@@ -7,7 +7,10 @@
   "plugins": [
     {
       "name": "deckcraft",
-      "source": ".",
+      "source": {
+        "source": "github",
+        "repo": "soul0101/deckcraft"
+      },
       "description": "Interactive Reveal.js deck framework. One HTML file per slide, manifest-driven order, design-token CSS, no build step."
     }
   ]
