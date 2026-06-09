@@ -8,8 +8,8 @@
     {
       "name": "deckcraft",
       "source": {
-        "source": "github",
-        "repo": "soul0101/deckcraft"
+        "source": "url",
+        "url": "https://github.com/soul0101/deckcraft.git"
       },
       "description": "Interactive Reveal.js deck framework. One HTML file per slide, manifest-driven order, design-token CSS, no build step."
     }
